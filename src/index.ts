@@ -5,10 +5,10 @@ import morgan from 'morgan';
 
 import db from './config/mongo';
 import { routerApi } from './routes';
-import { errorHandler } from './middlewares/error.handler';
+import { errorHandler } from './utils/error.handler';
 import { corsOptions } from './config/cors';
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env["PORT"] || 3000;
 const app = express();
 
 /* Para endpoints-logs */
