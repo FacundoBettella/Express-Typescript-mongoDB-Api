@@ -1,11 +1,11 @@
-import { hash } from 'bcryptjs';
+import { hash, compare } from 'bcryptjs';
 
-export const encrypHandler = async (toEncrypt: string) => {
+export const encryptHandler = async (toEncrypt: string) => {
   const hashstring = await hash(toEncrypt, 10);
   return hashstring;
 };
 
-
-// export const verifyHandler = async (encrypted: string) => {
-//   const isCorrect = await compare()
-// };
+export const verifyHandler = async (withOutHash: string, withHash: string) => {
+  const isCorrect = await compare(withOutHash, withHash);
+  return isCorrect;
+};

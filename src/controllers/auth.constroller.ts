@@ -1,35 +1,35 @@
 import { NextFunction, Request, Response } from 'express';
-import { registerNewUser } from '../services/auth.service';
-import jwt from 'jsonwebtoken';
+import { loginUser, registerNewUser } from '../services/auth.service';
 
-const JWT = process.env['JWT_SECRET'] || '';
-
-const registerController = async (req: Request, res: Response, next: NextFunction) => {
+const registerController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const user = req.body;
     const newUser = await registerNewUser(user);
-    res.status(201).json({ user: newUser })
+    res.status(201).json({ user: newUser });
   } catch (error) {
     next(error);
   }
-}
+};
 
+const loginController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = req.body;
+    console.log(user);
 
-const loginController = () => {
-  async (req: Request, res: Response, _next: NextFunction) => {
-    try {
-      const user = req.body;
+    const logedUser = await loginUser(user);
 
-      const payload = {
-        sub: user.id,
-        role: user.role,
-      };
-
-      const token = jwt.sign(payload, JWT);
-      res.json({ user, access_token: token });
-    } catch (error) {}
+    res.status(200).json(logedUser);
+  } catch (error) {
+    next(error);
   }
-}
+};
 
-
-export { loginController, registerController }
+export { loginController, registerController };

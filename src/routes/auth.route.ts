@@ -6,8 +6,8 @@ import {
 
 const authRouter = Router();
 
-authRouter.post('/register', registerController);
-
 authRouter.post('/login', loginController);
+
+authRouter.post('/register', registerController);
 
 export default authRouter;
