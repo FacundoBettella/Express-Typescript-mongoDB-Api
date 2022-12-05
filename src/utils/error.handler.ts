@@ -7,4 +7,12 @@ const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   });
 };
 
-export { errorHandler };
+const boomErrorHandler: ErrorRequestHandler = (err, _req, res, next) => {
+  if (err.isBoom) {
+    const { output } = err;
+    res.status(output.statusCode).json(output.payload);
+  }
+  next(err);
+};
+
+export { errorHandler, boomErrorHandler };

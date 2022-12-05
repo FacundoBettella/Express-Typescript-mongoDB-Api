@@ -1,36 +1,32 @@
 import { Car } from '../interfaces/car.interface';
 import { ITEM_MODEL } from '../models/item.model';
 
-const insertItemService = async (item: Car): Promise<Car> => {
-  const responseInsert = await ITEM_MODEL.create(item);
-  return responseInsert;
-};
+export class ItemService {
+  constructor() {}
 
-const findItemsService = async (): Promise<Car[]> => {
-  const responseItems = await ITEM_MODEL.find({});
-  return responseItems;
-};
+  static async insertItemService(item: Car): Promise<Car> {
+    const responseInsert = await ITEM_MODEL.create(item);
+    return responseInsert;
+  }
 
-const findItemService = async (id: Car['id']) => {
-  const responseItem = await ITEM_MODEL.findOne({ _id: id });
-  return responseItem;
-};
+  static async findItemsService(): Promise<Car[]> {
+    const responseItems = await ITEM_MODEL.find({});
+    return responseItems;
+  }
 
-const updateItemService = async (id: Car['id'], changes: Car) => {
-  await ITEM_MODEL.findOneAndUpdate({ id: id }, changes);
-  const response = await findItemService(id);
-  return response;
-};
+  static async findItemService(id: Car['id']) {
+    const responseItem = await ITEM_MODEL.findOne({ _id: id });
+    return responseItem;
+  }
 
-const deleteItemService = async (id: Car['id']) => {
-  const deletedItem = await ITEM_MODEL.findOneAndDelete({ _id: id });
-  return deletedItem;
-};
+  static async updateItemService(id: string, changes: Car) {
+    await ITEM_MODEL.findOneAndUpdate({ _id: id }, changes);
+    const response = await this.findItemService(id);
+    return response;
+  }
 
-export {
-  findItemService,
-  findItemsService,
-  insertItemService,
-  updateItemService,
-  deleteItemService,
-};
+  static async deleteItemService(id: Car['id']) {
+    const deletedItem = await ITEM_MODEL.findOneAndDelete({ _id: id });
+    return deletedItem;
+  }
+}

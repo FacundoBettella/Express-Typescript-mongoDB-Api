@@ -20,6 +20,8 @@ routerApi(app);
 /* Middlewares */
 app.use(cors(corsOptions));
 
+import "./utils/auth-strategies";
+
 app.use(errorHandler);
 
 db().then(() => console.log('DB conexion Ready'));
